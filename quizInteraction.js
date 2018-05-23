@@ -79,7 +79,27 @@ function buildQuiz() {
     quiz.innerHTML = output.join('');
 };
 
-function submitQuiz() {};
+function submitQuiz() {
+    const playerAnswers = document.querySelectorAll('.answer');
+    let totalScore = 0;
+
+    questions.forEach(
+        (currentQuestion, questionNumber) => {
+            // choose answer container
+            const answerContainer = playerAnswers[questionNumber];
+            // select radio that's checked
+            const selector = 'input[name=question' + questionNumber + ']:checked';
+            // select answer in radio
+            const playerChoice = (answerContainer.querySelector(selector) || {}).value;
+
+            if (playerChoice === currentQuestion.correctAnswer) {
+                totalScore +=1;
+            }
+        }
+    );
+
+    alert(`Great work, you scored \n ${totalScore} points!`);
+};
 
 buildQuiz();
 
