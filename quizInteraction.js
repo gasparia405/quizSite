@@ -1,19 +1,87 @@
-// create questions and answers
+const quiz = document.getElementById('quiz');
+const submit = document.getElementById('submit');
+const results = document.getElementById('results');
 
-const questions = {
-    question1: `<p>What was the first hit single from Country music singer Brett Young?</p>`,
-    question2: `<p>In which song does Kenny Chesney team up with Uncle Kracker?</p>`,
-    question3: `<p>Which Country artist was formerly the lead singer of Hooty and the Blowfish?</p>`,
-    question4: `<p>Which female duo teamed up to paint the town red in "Somethin' Bad"?</p>`
-}
+// use array of object literals to hold questions, answers, and correct answer
+const questions = [
+    {
+        question: 'Which famous author, whose real name is Samuel Clements, was born in Connecticut?',
+        answers : {
+            a : 'Virginia Woolf',
+            b : 'James Patterson',
+            c : 'Ian Fleming',
+            d : 'Mark Twain' 
+        },
+        correctAnswer: 'd'
+    },
+    {
+        question: 'Which corner of Connecticut is home to Mystic Pizza?',
+        answers : {
+            a : 'Northwest',
+            b : 'Northeast',
+            c : 'Southeast',
+            d : 'Southwest' 
+        },
+        correctAnswer: 'c'
+    },
+    {
+        question: 'What was the maximum speed listed in the first ever automobile law, passed in Connecticut in 1901?',
+        answers : {
+            a : '10 mph',
+            b : '12 mph',
+            c : '14 mph',
+            d : '16 mph' 
+        },
+        correctAnswer: 'b'
+    },
+    {
+        question: 'Which famous reference book was founded in Connecticut?',
+        answers : {
+            a : 'Oxford English Dictionary in Oxford',
+            b : 'Webster Dictionary in New Haven',
+            c : 'Collins Dictionary in Hartford',
+            d : 'Rand-McNally Atlas in New London' 
+        },
+        correctAnswer: 'b'
+    }
+];
 
-const answers = {
-    answer1: ,
-    answer2: ,
-    answer3: ,
-    answer4: 'li'
-}
+function buildQuiz() {
+    output = [];
 
-// change answers
+    // use Array.forEach function to create lambda function for iterating through array
+    questions.forEach( 
+        (currentQuestion, questionNumber) => {
+        
+            const answerOutput = [];
 
-// display answer given and correct answer
+            // iterate through object literal values in each question
+            // and add HTML radio button
+            for (letter in currentQuestion.answers) {
+                answerOutput.push(
+                    `<label>
+                        <input type='radio' name='question${questionNumber}' value='${letter}'>
+                            ${letter} : ${currentQuestion.answers[letter]}
+                        </input>
+                    </label><br>`
+                );
+            }
+
+            // add question to output array
+            output.push(
+                `<div class='question'>${currentQuestion.question}</div>
+                <div class='answer'>${answerOutput.join('')}</div>`
+            );
+        }
+    );
+
+    // change inner HTML of quiz container by joining output array
+    quiz.innerHTML = output.join('');
+};
+
+function submitQuiz() {};
+
+buildQuiz();
+
+submit.addEventListener('click', submitQuiz);
+
